@@ -1,57 +1,23 @@
 <script lang="ts">
-	import Header from './Header.svelte';
-	import '../app.css';
+	import '../app.postcss';
 
-	let { children } = $props();
+	// Highlight JS
+	import hljs from 'highlight.js/lib/core';
+	import 'highlight.js/styles/github-dark.css';
+	import { storeHighlightJs } from '@skeletonlabs/skeleton';
+	import xml from 'highlight.js/lib/languages/xml'; // for HTML
+	import css from 'highlight.js/lib/languages/css';
+	import javascript from 'highlight.js/lib/languages/javascript';
+	import typescript from 'highlight.js/lib/languages/typescript';
+
+	hljs.registerLanguage('xml', xml); // for HTML
+	hljs.registerLanguage('css', css);
+	hljs.registerLanguage('javascript', javascript);
+	hljs.registerLanguage('typescript', typescript);
+	storeHighlightJs.set(hljs);
+
+	// Floating UI for Popups
+	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 </script>
 
-<div class="app">
-	<Header />
-
-	<main>
-		{@render children()}
-	</main>
-
-	<footer>
-		<p>
-			visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to learn about SvelteKit
-		</p>
-	</footer>
-</div>
-
-<style>
-	.app {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
-
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
-	}
-</style>
+<slot />
